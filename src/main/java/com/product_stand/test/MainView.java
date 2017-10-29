@@ -20,7 +20,7 @@ public class MainView implements Serializable {
 
     public String getHello() {
         return hello;
-    }
+    } //
 
     public void setHello(String hello) {
         this.hello = hello;
