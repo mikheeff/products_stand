@@ -2,6 +2,7 @@ package com.product_stand.test.impl;
 
 import com.product_stand.test.api.ExampleService;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.HashMap;
 import java.util.Map;
