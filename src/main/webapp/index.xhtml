@@ -12,5 +12,6 @@
     <h:outputText id="hello" value="#{mainView.hello}"/>
     <p:commandButton actionListener="#{mainView.changeHello}" update="hello" ajax="true"/>
 </h:form>
+<h:outputText  value="#{mainView.allGoods.get(0).name}"/>
 </body>
 </html>
