@@ -29,6 +29,7 @@
         <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="item-manager-pu" value="7b8d801c-8248-4d44-b298-213109186179" />
+          <factory-entry name="product_stand" value="7b8d801c-8248-4d44-b298-213109186179" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>

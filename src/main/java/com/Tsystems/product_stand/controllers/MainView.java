@@ -2,6 +2,7 @@ package com.Tsystems.product_stand.controllers;
 
 import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
+import com.Tsystems.product_stand.jms.JmsConsumer;
 import com.Tsystems.product_stand.models.SmallGoods;
 import com.Tsystems.product_stand.services.api.SmallGoodsService;
 import com.Tsystems.product_stand.services.impl.SmallGoodsServiceImpl;
@@ -27,6 +28,19 @@ public class MainView implements Serializable {
 
     public void changeHello() {
         hello = hello + new Random().nextInt();
+    }
+
+    public void recieveMessage(){
+        String url = "tcp://localhost:61616"; // url коннектора брокера
+        try(JmsConsumer consumer = new JmsConsumer(url, "test.in"))
+        {
+            consumer.init();
+
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public String getHello() {
