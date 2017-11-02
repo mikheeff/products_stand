@@ -28,9 +28,6 @@ public class MainView implements Serializable {
 
     public void changeHello() {
         hello = hello + new Random().nextInt();
-    }
-
-    public void recieveMessage(){
         String url = "tcp://localhost:61616"; // url коннектора брокера
         try(JmsConsumer consumer = new JmsConsumer(url, "test.in"))
         {
@@ -41,6 +38,10 @@ public class MainView implements Serializable {
         {
             e.printStackTrace();
         }
+    }
+
+    public void receiveMessage(){
+
     }
 
     public String getHello() {
