@@ -10,6 +10,7 @@ import com.Tsystems.product_stand.services.impl.SmallGoodsServiceImpl;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.jms.JMSException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
@@ -22,25 +23,18 @@ public class MainView implements Serializable {
 
     private String hello = "Hello";
 
-    public List<SmallGoodsEntity> getAllGoods(){
+    public List<SmallGoodsEntity> getAllGoods() {
         return smallGoodsDAO.getAll();
     }
 
-    public void changeHello() {
+    public void changeHello() throws JMSException {
         hello = hello + new Random().nextInt();
         String url = "tcp://localhost:61616"; // url коннектора брокера
-        try(JmsConsumer consumer = new JmsConsumer(url, "test.in"))
-        {
-            consumer.init();
-
-        }
-        catch (Throwable e)
-        {
-            e.printStackTrace();
-        }
+        JmsConsumer consumer = new JmsConsumer(url, "test.in");
+        consumer.init();
     }
 
-    public void receiveMessage(){
+    public void receiveMessage() {
 
     }
 

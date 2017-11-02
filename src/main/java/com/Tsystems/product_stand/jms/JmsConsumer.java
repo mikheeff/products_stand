@@ -1,14 +1,12 @@
 package com.Tsystems.product_stand.jms;
 
 
-
-
 import com.Tsystems.product_stand.models.SmallGoods;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
-public class JmsConsumer implements MessageListener, AutoCloseable{
+public class JmsConsumer implements MessageListener, AutoCloseable {
     private final ActiveMQConnectionFactory _connectionFactory;
     private Connection _connection = null;
     private Session _session = null;
@@ -20,8 +18,7 @@ public class JmsConsumer implements MessageListener, AutoCloseable{
      * Здесь я не стал добавлять вариант с авторизацией. Он показан в producer-е.
      * Брокер ActiveMQ из коробки настроен на работу без авторизации.
      */
-    public JmsConsumer(String url, String queue)
-    {
+    public JmsConsumer(String url, String queue) {
         _connectionFactory = new ActiveMQConnectionFactory(url);
         _queueName = queue;
     }
@@ -30,10 +27,8 @@ public class JmsConsumer implements MessageListener, AutoCloseable{
      * Инициализация consumer-а.
      * Обратите внимание на добавление экземпляра этого класса
      * в качестве подписчика на событие получения сообщений.
-     *
      */
-    public void init() throws JMSException
-    {
+    public void init() throws JMSException {
         System.out.println("Init consumer...");
 
         _connection = _connectionFactory.createConnection();
@@ -51,24 +46,18 @@ public class JmsConsumer implements MessageListener, AutoCloseable{
      * Обработчик события появления сообщения в целевом объекте.
      * Этот метод является частью реализации интерфейса MessageListener.
      */
-    public void onMessage(Message msg)
-    {
-        if (msg instanceof TextMessage)
-        {
-            try
-            {
+    public void onMessage(Message msg) {
+        if (msg instanceof TextMessage) {
+            try {
 //                ObjectMessage objectMessage = (ObjectMessage) msg;
 //                Object object = objectMessage.getObjectProperty("name");
                 System.out.println("Received message: " + ((TextMessage) msg).getText());
 //                    SmallGoods smallGoods = (SmallGoods) objectMessage.getObject();
 //                System.out.println(smallGoods.getName());
-            }
-            catch (JMSException e)
-            {
+            } catch (JMSException e) {
                 e.printStackTrace();
             }
-        }
-        else System.out.println("Received message: " + msg.getClass().getName());
+        } else System.out.println("Received message: " + msg.getClass().getName());
     }
 
     /**
@@ -76,24 +65,17 @@ public class JmsConsumer implements MessageListener, AutoCloseable{
      * Этот метод является реализацией интерфейса Autoclosable,
      * добавленого в Java7 и используемого в блоке try-with-resources.
      */
-    public void close() throws Exception
-    {
-        try
-        {
+    public void close() throws Exception {
+        try {
             if (_session != null)
                 _session.close();
-        }
-        catch (JMSException jmsEx)
-        {
+        } catch (JMSException jmsEx) {
             jmsEx.printStackTrace();
         }
-        try
-        {
+        try {
             if (_connection != null)
                 _connection.close();
-        }
-        catch (JMSException e)
-        {
+        } catch (JMSException e) {
             e.printStackTrace();
         }
     }
