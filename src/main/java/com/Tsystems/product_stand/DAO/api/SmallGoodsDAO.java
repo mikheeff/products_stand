@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SmallGoodsDAO {
     List<SmallGoodsEntity> getAll();
+    public void addSmallGoods(SmallGoodsEntity smallGoodsEntity);
 }

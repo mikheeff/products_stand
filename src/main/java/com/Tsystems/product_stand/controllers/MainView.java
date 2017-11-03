@@ -3,9 +3,6 @@ package com.Tsystems.product_stand.controllers;
 import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
 import com.Tsystems.product_stand.jms.JmsConsumer;
-import com.Tsystems.product_stand.models.SmallGoods;
-import com.Tsystems.product_stand.services.api.SmallGoodsService;
-import com.Tsystems.product_stand.services.impl.SmallGoodsServiceImpl;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

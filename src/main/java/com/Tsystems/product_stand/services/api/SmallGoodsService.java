@@ -1,6 +1,6 @@
 package com.Tsystems.product_stand.services.api;
 
-import com.Tsystems.product_stand.models.SmallGoods;
+import com.tsystems.SmallGoods;
 
 import java.util.List;
 

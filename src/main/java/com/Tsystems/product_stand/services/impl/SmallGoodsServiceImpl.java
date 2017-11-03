@@ -1,12 +1,8 @@
 package com.Tsystems.product_stand.services.impl;
 
-import com.Tsystems.product_stand.DAO.impl.SmallGoodsDAOImpl;
-import com.Tsystems.product_stand.entities.SmallGoodsEntity;
-import com.Tsystems.product_stand.models.SmallGoods;
 import com.Tsystems.product_stand.services.api.SmallGoodsService;
+import com.tsystems.SmallGoods;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.List;
 //@Stateless
