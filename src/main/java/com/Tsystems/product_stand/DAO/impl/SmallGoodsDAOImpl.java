@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import java.util.List;
 
-@Stateless
+@Stateless(name = "goodsDAO", mappedName = "beanName")
 //@EJB(beanInterface = SmallGoodsDAO.class, name = "SmallGoodsDAO")
 //@LocalBean
 public class SmallGoodsDAOImpl implements SmallGoodsDAO {
@@ -27,8 +27,8 @@ public class SmallGoodsDAOImpl implements SmallGoodsDAO {
     }
     @Override
     public void addSmallGoods(SmallGoodsEntity smallGoodsEntity) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.persist(smallGoodsEntity);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
     }
 }

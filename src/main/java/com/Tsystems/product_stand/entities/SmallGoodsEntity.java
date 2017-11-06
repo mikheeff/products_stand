@@ -16,6 +16,8 @@ public class SmallGoodsEntity implements Serializable {
     private String name;
     @Column (name = "price")
     private float price;
+    @Column (name = "img")
+    private String img;
 
     public SmallGoodsEntity(){
 
@@ -48,5 +50,13 @@ public class SmallGoodsEntity implements Serializable {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

@@ -1,8 +1,11 @@
 package com.Tsystems.product_stand.controllers;
 
+import com.Tsystems.product_stand.Configuration.ConfigurationClass;
 import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
 import com.Tsystems.product_stand.jms.JmsConsumer;
+import com.Tsystems.product_stand.services.api.SmallGoodsService;
+import com.tsystems.SmallGoods;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,24 +19,30 @@ import java.util.Random;
 @ManagedBean
 public class MainView implements Serializable {
     @EJB
-    SmallGoodsDAO smallGoodsDAO;
+    SmallGoodsService smallGoodsService;
 
     private String hello = "Hello";
 
-    public List<SmallGoodsEntity> getAllGoods() {
-        return smallGoodsDAO.getAll();
+    public List<SmallGoods> getAllGoods() {
+
+        return smallGoodsService.getAll();
     }
 
     public void changeHello() throws JMSException {
         hello = hello + new Random().nextInt();
-        String url = "tcp://localhost:61616"; // url коннектора брокера
-        JmsConsumer consumer = new JmsConsumer(url, "test.in");
+//        receiveMessage();
+        loadAllGoodsToDB();
+    }
+
+    public void loadAllGoodsToDB(){
+        smallGoodsService.loadAllGoodsToDB();
+    }
+    public void receiveMessage() throws JMSException{
+        String url = ConfigurationClass.ACTIVE_MQ_URL; // broker connector url
+        JmsConsumer consumer = new JmsConsumer(url, "test.in",smallGoodsService);
         consumer.init();
     }
 
-    public void receiveMessage() {
-
-    }
 
     public String getHello() {
         return hello;

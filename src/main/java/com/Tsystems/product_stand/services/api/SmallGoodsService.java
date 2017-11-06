@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SmallGoodsService {
     List<SmallGoods> getAll();
+    void addSmallGoods(SmallGoods smallGoods);
+    void loadAllGoodsToDB();
 }

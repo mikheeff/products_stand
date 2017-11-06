@@ -2,45 +2,55 @@ package com.Tsystems.product_stand.jms;
 
 
 import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
+import com.Tsystems.product_stand.DAO.impl.SmallGoodsDAOImpl;
+import com.Tsystems.product_stand.controllers.MainView;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
+import com.Tsystems.product_stand.services.api.SmallGoodsService;
 import com.tsystems.SmallGoods;
-import com.tsystems.TestModel;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.jms.*;
 import java.util.Arrays;
-
-//@Stateless
-//@EJB(beanInterface = JmsConsumer.class, name = "HotelService")
 public class JmsConsumer implements MessageListener, AutoCloseable {
-    @EJB
-    SmallGoodsDAO smallGoodsDAO;
-    private final ActiveMQConnectionFactory _connectionFactory;
+    private SmallGoodsService smallGoodsService;
+//    @EJB
+//    private MainView mainView;
+    private ActiveMQConnectionFactory _connectionFactory;
     private Connection _connection = null;
     private Session _session = null;
     private MessageConsumer _consumer;
     private String _queueName;
+    private SmallGoodsEntity smallGoodsEntity = null;
 
     /**
      * Конструктор используется в случае, когда брокер не требует авторизации.
      * Здесь я не стал добавлять вариант с авторизацией. Он показан в producer-е.
      * Брокер ActiveMQ из коробки настроен на работу без авторизации.
      */
+//    @Inject
+//    public JmsConsumer(SmallGoodsDAO smallGoodsDAO){
+//        this.smallGoodsDAO = smallGoodsDAO;
+//    }
+    public JmsConsumer(){
 
-    public JmsConsumer(String url, String queue) {
+    }
+
+//    public JmsConsumer(){
+//        _connectionFactory.setBrokerURL("tcp://localhost:61616");
+//        _connectionFactory.setTrustedPackages(Arrays.asList("com.tsystems"));
+//        _queueName = "test.in";
+//    }
+    public JmsConsumer(String url, String queue, SmallGoodsService smallGoodsService) {
         _connectionFactory = new ActiveMQConnectionFactory(url);
         _connectionFactory.setTrustedPackages(Arrays.asList("com.tsystems"));
         _queueName = queue;
+        this.smallGoodsService = smallGoodsService;
     }
 
-//    public ActiveMQConnectionFactory activeMQConnectionFactory() {
-//        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("your broker URL");
-//        factory.setTrustedPackages(Arrays.asList("com.my.package"));
-//        return factory;
-//    }
 
     /**
      * Инициализация consumer-а.
@@ -69,21 +79,23 @@ public class JmsConsumer implements MessageListener, AutoCloseable {
         if (msg instanceof ObjectMessage) {
             try {
                 ObjectMessage objectMessage = (ObjectMessage) msg;
-                Object object = objectMessage.getObject();
-//                System.out.println("Received message: " + ((TextMessage) msg).getText());
 
-                    SmallGoods smallGoods = (SmallGoods) objectMessage.getObject();
+                SmallGoods smallGoods = (SmallGoods) objectMessage.getObject();
 
-                SmallGoodsEntity smallGoodsEntity = new SmallGoodsEntity();
-                smallGoodsEntity.setId(smallGoods.getId());
-                smallGoodsEntity.setName(smallGoods.getName());
-                smallGoodsEntity.setPrice(smallGoods.getPrice());
-                smallGoodsDAO.addSmallGoods(smallGoodsEntity);
+                smallGoodsService.addSmallGoods(smallGoods);
 //                System.out.println(smallGoods.getName());
             } catch (JMSException e) {
                 e.printStackTrace();
             }
         } else System.out.println("Received message: " + msg.getClass().getName());
+    }
+
+    public SmallGoodsEntity getSmallGoodsEntity() {
+        return smallGoodsEntity;
+    }
+
+    public void setSmallGoodsEntity(SmallGoodsEntity smallGoodsEntity) {
+        this.smallGoodsEntity = smallGoodsEntity;
     }
 
     /**
