@@ -6,7 +6,7 @@ import com.Tsystems.product_stand.services.api.SmallGoodsService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.tsystems.SmallGoods;
+import com.tsystems.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.type.TypeFactory;
 import org.codehaus.jackson.type.TypeReference;
@@ -45,6 +45,28 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         smallGoodsEntity.setPrice(smallGoods.getPrice());
         smallGoodsEntity.setImg(smallGoods.getImg());
         smallGoodsDAO.addSmallGoods(smallGoodsEntity);
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if (event instanceof AddEvent){
+            addSmallGoods((SmallGoods) event.getProperty());
+        }
+        if (event instanceof DeleteEvent){
+            smallGoodsDAO.deleteSmallGoodsById((Integer)event.getProperty());
+        }
+        if (event instanceof UpdateEvent){
+            updateSmallGoods((SmallGoods)event.getProperty());
+        }
+    }
+
+    @Override
+    public void updateSmallGoods(SmallGoods smallGoods) {
+        SmallGoodsEntity smallGoodsEntity = smallGoodsDAO.getSmallGoodsById(smallGoods.getId());
+        smallGoodsEntity.setName(smallGoods.getName());
+        smallGoodsEntity.setPrice(smallGoods.getPrice());
+        smallGoodsEntity.setImg(smallGoods.getImg());
+        smallGoodsDAO.updateSmallGoods(smallGoodsEntity);
     }
 
     @Override

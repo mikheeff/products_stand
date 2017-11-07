@@ -45,7 +45,7 @@ public class MainView implements Serializable {
 
     public void changeHello() throws JMSException {
         hello = hello + new Random().nextInt();
-//        receiveMessage();
+        receiveMessage();
     }
 
     public void loadAllGoodsToDB(){

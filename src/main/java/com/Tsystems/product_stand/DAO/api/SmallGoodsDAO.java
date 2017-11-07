@@ -7,5 +7,8 @@ import java.util.List;
 @Remote
 public interface SmallGoodsDAO {
     List<SmallGoodsEntity> getAll();
-    public void addSmallGoods(SmallGoodsEntity smallGoodsEntity);
+    void addSmallGoods(SmallGoodsEntity smallGoodsEntity);
+    void deleteSmallGoodsById(int id);
+    SmallGoodsEntity getSmallGoodsById(int id);
+    void updateSmallGoods(SmallGoodsEntity smallGoodsEntity);
 }

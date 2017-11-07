@@ -27,8 +27,21 @@ public class SmallGoodsDAOImpl implements SmallGoodsDAO {
     }
     @Override
     public void addSmallGoods(SmallGoodsEntity smallGoodsEntity) {
-//        em.getTransaction().begin();
         em.persist(smallGoodsEntity);
-//        em.getTransaction().commit();
+    }
+
+    @Override
+    public void deleteSmallGoodsById(int id) {
+        em.remove(em.find(SmallGoodsEntity.class, id));
+    }
+
+    @Override
+    public SmallGoodsEntity getSmallGoodsById(int id) {
+        return em.find(SmallGoodsEntity.class, id);
+    }
+
+    @Override
+    public void updateSmallGoods(SmallGoodsEntity smallGoodsEntity) {
+        em.merge(smallGoodsEntity);
     }
 }

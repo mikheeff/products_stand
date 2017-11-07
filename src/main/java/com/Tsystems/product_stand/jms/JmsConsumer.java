@@ -6,6 +6,7 @@ import com.Tsystems.product_stand.DAO.impl.SmallGoodsDAOImpl;
 import com.Tsystems.product_stand.controllers.MainView;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
 import com.Tsystems.product_stand.services.api.SmallGoodsService;
+import com.tsystems.Event;
 import com.tsystems.SmallGoods;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
@@ -31,22 +32,13 @@ public class JmsConsumer implements MessageListener, AutoCloseable {
      * Здесь я не стал добавлять вариант с авторизацией. Он показан в producer-е.
      * Брокер ActiveMQ из коробки настроен на работу без авторизации.
      */
-//    @Inject
-//    public JmsConsumer(SmallGoodsDAO smallGoodsDAO){
-//        this.smallGoodsDAO = smallGoodsDAO;
-//    }
     public JmsConsumer(){
 
     }
 
-//    public JmsConsumer(){
-//        _connectionFactory.setBrokerURL("tcp://localhost:61616");
-//        _connectionFactory.setTrustedPackages(Arrays.asList("com.tsystems"));
-//        _queueName = "test.in";
-//    }
     public JmsConsumer(String url, String queue, SmallGoodsService smallGoodsService) {
         _connectionFactory = new ActiveMQConnectionFactory(url);
-        _connectionFactory.setTrustedPackages(Arrays.asList("com.tsystems"));
+        _connectionFactory.setTrustedPackages(Arrays.asList("com.tsystems","java.lang"));
         _queueName = queue;
         this.smallGoodsService = smallGoodsService;
     }
@@ -80,23 +72,17 @@ public class JmsConsumer implements MessageListener, AutoCloseable {
             try {
                 ObjectMessage objectMessage = (ObjectMessage) msg;
 
-                SmallGoods smallGoods = (SmallGoods) objectMessage.getObject();
+//                SmallGoods smallGoods = (SmallGoods) objectMessage.getObject();
+                Event event = (Event) objectMessage.getObject();
 
-                smallGoodsService.addSmallGoods(smallGoods);
-//                System.out.println(smallGoods.getName());
+//                smallGoodsService.addSmallGoods(smallGoods);
+                smallGoodsService.handleEvent(event);
             } catch (JMSException e) {
                 e.printStackTrace();
             }
         } else System.out.println("Received message: " + msg.getClass().getName());
     }
 
-    public SmallGoodsEntity getSmallGoodsEntity() {
-        return smallGoodsEntity;
-    }
-
-    public void setSmallGoodsEntity(SmallGoodsEntity smallGoodsEntity) {
-        this.smallGoodsEntity = smallGoodsEntity;
-    }
 
     /**
      * Метод закрывает созединения перед разрушением объекта.
