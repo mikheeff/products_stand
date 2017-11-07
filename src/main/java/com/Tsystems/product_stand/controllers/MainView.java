@@ -7,6 +7,7 @@ import com.Tsystems.product_stand.jms.JmsConsumer;
 import com.Tsystems.product_stand.services.api.SmallGoodsService;
 import com.tsystems.SmallGoods;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -21,7 +22,21 @@ public class MainView implements Serializable {
     @EJB
     SmallGoodsService smallGoodsService;
 
+    private List<SmallGoods> smallGoodsList;
+
     private String hello = "Hello";
+
+    @PostConstruct
+    public void init(){
+//        loadAllGoodsToDB();
+        smallGoodsList = smallGoodsService.getAll();
+    }
+
+    public List<SmallGoods> getSmallGoodsList() {
+        return smallGoodsList;
+    }
+
+
 
     public List<SmallGoods> getAllGoods() {
 
@@ -31,7 +46,6 @@ public class MainView implements Serializable {
     public void changeHello() throws JMSException {
         hello = hello + new Random().nextInt();
 //        receiveMessage();
-        loadAllGoodsToDB();
     }
 
     public void loadAllGoodsToDB(){

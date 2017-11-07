@@ -102,7 +102,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.activemq:activemq-all:5.15.2" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-server:1.8" level="project" />
     <orderEntry type="library" name="Maven: asm:asm:3.1" level="project" />
@@ -118,5 +118,6 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-client:1.8" level="project" />
+    <orderEntry type="library" name="primefaces-6.1" level="project" />
   </component>
 </module>
