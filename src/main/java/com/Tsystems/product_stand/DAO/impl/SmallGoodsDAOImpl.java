@@ -44,4 +44,9 @@ public class SmallGoodsDAOImpl implements SmallGoodsDAO {
     public void updateSmallGoods(SmallGoodsEntity smallGoodsEntity) {
         em.merge(smallGoodsEntity);
     }
+
+    @Override
+    public void removeAll() {
+        em.createQuery("delete from SmallGoodsEntity").executeUpdate();
+    }
 }

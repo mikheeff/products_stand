@@ -24,6 +24,7 @@
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-validator:4.3.2.Final" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:3.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:3.2.4.RELEASE" />
@@ -38,7 +39,6 @@
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1.1" />
           <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.23" />
-          <element id="library" level="project" name="Maven: org.hibernate:hibernate-validator:4.3.2.Final" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:4.2.21.Final" />
           <element id="library" level="project" name="Maven: antlr:antlr:2.7.7" />
           <element id="library" level="project" name="Maven: dom4j:dom4j:1.6.1" />
@@ -51,7 +51,6 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.3" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" />
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
-          <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.1" />
           <element id="library" level="project" name="Maven: org.apache.activemq:activemq-all:5.15.2" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-server:1.8" />
           <element id="library" level="project" name="Maven: asm:asm:3.1" />
@@ -67,6 +66,8 @@
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.7.1" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-xc:1.7.1" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-client:1.8" />
+          <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.1" />
+          <element id="library" level="project" name="Maven: org.primefaces.themes:glass-x:1.0.6" />
         </element>
       </element>
       <element id="directory" name="META-INF">

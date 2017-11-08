@@ -18,14 +18,18 @@ public class SmallGoodsEntity implements Serializable {
     private float price;
     @Column (name = "img")
     private String img;
+    @Column (name = "sales_counter")
+    private int salesCounter;
 
     public SmallGoodsEntity(){
 
     }
 
-    public SmallGoodsEntity(String name, float price) {
+    public SmallGoodsEntity(String name, float price, String img, int salesCounter) {
         this.name = name;
         this.price = price;
+        this.img = img;
+        this.salesCounter = salesCounter;
     }
 
     public int getId() {
@@ -58,5 +62,13 @@ public class SmallGoodsEntity implements Serializable {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public int getSalesCounter() {
+        return salesCounter;
+    }
+
+    public void setSalesCounter(int salesCounter) {
+        this.salesCounter = salesCounter;
     }
 }

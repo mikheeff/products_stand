@@ -11,4 +11,5 @@ public interface SmallGoodsDAO {
     void deleteSmallGoodsById(int id);
     SmallGoodsEntity getSmallGoodsById(int id);
     void updateSmallGoods(SmallGoodsEntity smallGoodsEntity);
+    void removeAll();
 }

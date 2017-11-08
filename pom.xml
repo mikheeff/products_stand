@@ -11,6 +11,14 @@
     <name>WildFly Example: EJB Remote Server</name>
     <description>Server-Side EJB for remote EJB example on Wildfly</description>
 
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>Prime Repo</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
+
     <properties>
 
         <!-- Explicitly declaring the source encoding eliminates the following message: -->
@@ -44,23 +52,11 @@
          <!--JBoss dependency versions-->
         <version.jboss.spec.javaee.7.0>1.0.0.Final</version.jboss.spec.javaee.7.0>
 
-        <!-- other plugin versions -->
-        <!--<version.compiler.plugin>3.1</version.compiler.plugin>-->
-        <!--<version.ejb.plugin>2.3</version.ejb.plugin>-->
-
-        <!-- maven-compiler-plugin -->
-        <!--<maven.compiler.target>1.8</maven.compiler.target>-->
-        <!--<maven.compiler.source>1.8</maven.compiler.source>-->
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- JBoss distributes a complete set of Java EE 7 APIs including
-                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
-                a collection) of artifacts. We use this here so that we always get the correct
-                versions of artifacts. Here we use the jboss-javaee-7.0-with-hibernate stack
-                (you can read this as the JBoss stack of the Java EE Web Profile 6 APIs with
-                extras from the Hibernate family of projects) -->
+
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
                 <artifactId>wildfly-javaee7</artifactId>
@@ -118,22 +114,10 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- dependency> <groupId>org.jboss.spec.javax.servlet</groupId>
-            <artifactId>jboss-servlet-api_3.1_spec</artifactId> <scope>provided</scope>
-            </dependency -->
-
-
         <!-- Import the JAX-RS API, we use provided scope as the API is included in JBoss WildFly -->
         <dependency>
             <groupId>org.jboss.spec.javax.ws.rs</groupId>
             <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import the JPA API, we use provided scope as the API is included in JBoss WildFly -->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -144,21 +128,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JSR-303 (Bean Validation) Implementation -->
-        <!-- Provides portable constraints such as @Email -->
-        <!-- Hibernate Validator is shipped in JBoss WildFly -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
-        <!-- Import the JSF API, we use provided scope as the API is included in JBoss WildFly -->
         <dependency>
             <groupId>org.jboss.spec.javax.faces</groupId>
             <artifactId>jboss-jsf-api_2.2_spec</artifactId>
@@ -178,43 +148,25 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
-<!---->
-<!---->
-        <!--<dependency>-->
-            <!--<groupId>junit</groupId>-->
-            <!--<artifactId>junit</artifactId>-->
-            <!--<version>3.8.1</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-<!---->
+
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>2.1</version>
         </dependency>
-<!---->
-        <!--<dependency>-->
-            <!--<groupId>javax.ejb</groupId>-->
-            <!--<artifactId>ejb-api</artifactId>-->
-            <!--<version>3.0</version>-->
-        <!--</dependency>-->
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.6.3</version>
         </dependency>
-<!---->
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>6.0</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
@@ -245,6 +197,11 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>glass-x</artifactId>
+            <version>1.0.6</version>
+        </dependency>
 
 
     </dependencies>
@@ -284,26 +241,6 @@
             </plugin>
         </plugins>
 
-        <!-- Set the name of the deployment -->
-        <!--<finalName>${project.artifactId}</finalName>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<artifactId>maven-compiler-plugin</artifactId>-->
-                <!--<version>${version.compiler.plugin}</version>-->
-                <!--<configuration>-->
-                    <!--<source>${maven.compiler.source}</source>-->
-                    <!--<target>${maven.compiler.target}</target>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-ejb-plugin</artifactId>-->
-                <!--<version>${version.ejb.plugin}</version>-->
-                <!--<configuration>-->
-                    <!--<ejbVersion>3.1</ejbVersion>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
     </build>
 
     <profiles>
@@ -332,16 +269,6 @@
         </profile>
 
     </profiles>
-
-    <repositories>
-        <repository>
-        <id>prime-repo</id>
-        <name>PrimeFaces Maven Repository</name>
-        <url>http://repository.primefaces.org</url>
-        <layout>default</layout>
-        </repository>
-    </repositories>
-
 
 
 </project>

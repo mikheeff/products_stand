@@ -11,4 +11,5 @@ public interface SmallGoodsService {
     void loadAllGoodsToDB();
     void handleEvent(Event event);
     void updateSmallGoods(SmallGoods smallGoods);
+    void removeAll();
 }

@@ -9,6 +9,7 @@ import com.tsystems.SmallGoods;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.jms.JMSException;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
-@SessionScoped
+@ApplicationScoped
 @ManagedBean
 public class MainView implements Serializable {
     @EJB
@@ -28,7 +29,8 @@ public class MainView implements Serializable {
 
     @PostConstruct
     public void init(){
-//        loadAllGoodsToDB();
+        smallGoodsService.removeAll();
+        loadAllGoodsToDB();
         smallGoodsList = smallGoodsService.getAll();
     }
 
