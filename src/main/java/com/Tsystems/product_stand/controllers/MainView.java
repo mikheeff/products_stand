@@ -23,36 +23,41 @@ public class MainView implements Serializable {
     @EJB
     SmallGoodsService smallGoodsService;
 
-    private List<SmallGoods> smallGoodsList;
+//    private List<SmallGoods> smallGoodsList;
 
     private String hello = "Hello";
 
     @PostConstruct
     public void init(){
         smallGoodsService.removeAll();
-        loadAllGoodsToDB();
-        smallGoodsList = smallGoodsService.getAll();
+        smallGoodsService.loadAllGoodsToDB();
+//        smallGoodsList = smallGoodsService.getBestSellers();
+        try {
+            receiveMessage();
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 
-    public List<SmallGoods> getSmallGoodsList() {
-        return smallGoodsList;
-    }
+//    public List<SmallGoods> getSmallGoodsList() {
+//        return smallGoodsList;
+//    }
 
+    public List<SmallGoods> getBestSellers() {
+        return smallGoodsService.getBestSellers();
+    }
 
 
     public List<SmallGoods> getAllGoods() {
-
         return smallGoodsService.getAll();
     }
 
+
     public void changeHello() throws JMSException {
         hello = hello + new Random().nextInt();
-        receiveMessage();
+
     }
 
-    public void loadAllGoodsToDB(){
-        smallGoodsService.loadAllGoodsToDB();
-    }
     public void receiveMessage() throws JMSException{
         String url = ConfigurationClass.ACTIVE_MQ_URL; // broker connector url
         JmsConsumer consumer = new JmsConsumer(url, "test.in",smallGoodsService);

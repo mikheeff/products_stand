@@ -25,8 +25,17 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
 
     @Override
     public List<SmallGoods> getAll() {
+        return convertToDTO(smallGoodsDAO.getAll());
+    }
+
+    @Override
+    public List<SmallGoods> getBestSellers() {
+        return convertToDTO(smallGoodsDAO.getBestSellers());
+    }
+
+    List<SmallGoods> convertToDTO(List <SmallGoodsEntity> smallGoodsEntityList){
         List<SmallGoods> smallGoodsList = new ArrayList<>();
-        for (SmallGoodsEntity smallGoodsEntity : smallGoodsDAO.getAll()){
+        for (SmallGoodsEntity smallGoodsEntity : smallGoodsEntityList){
             SmallGoods smallGoods = new SmallGoods();
             smallGoods.setId(smallGoodsEntity.getId());
             smallGoods.setName(smallGoodsEntity.getName());
@@ -38,6 +47,7 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         return smallGoodsList;
     }
 
+
     @Override
     public void addSmallGoods(SmallGoods smallGoods) {
         SmallGoodsEntity smallGoodsEntity = new SmallGoodsEntity();
@@ -45,6 +55,7 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         smallGoodsEntity.setName(smallGoods.getName());
         smallGoodsEntity.setPrice(smallGoods.getPrice());
         smallGoodsEntity.setImg(smallGoods.getImg());
+        smallGoodsEntity.setSalesCounter(smallGoods.getSalesCounter());
         smallGoodsDAO.addSmallGoods(smallGoodsEntity);
     }
 
@@ -77,7 +88,7 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
 
     @Override
     public void loadAllGoodsToDB() {
-        List<SmallGoods> SmallGoodsList = new ArrayList<>();
+        List<SmallGoods> SmallGoodsList;
         Client client = Client.create();
 
         WebResource webResource = client.resource(ConfigurationClass.SERVER_URL+"/catalog/goodsAll");

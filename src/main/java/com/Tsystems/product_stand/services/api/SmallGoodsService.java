@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface SmallGoodsService {
     List<SmallGoods> getAll();
+    List<SmallGoods> getBestSellers();
     void addSmallGoods(SmallGoods smallGoods);
     void loadAllGoodsToDB();
     void handleEvent(Event event);

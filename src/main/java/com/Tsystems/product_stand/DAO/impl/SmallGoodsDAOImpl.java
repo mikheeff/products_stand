@@ -1,5 +1,6 @@
 package com.Tsystems.product_stand.DAO.impl;
 
+import com.Tsystems.product_stand.Configuration.ConfigurationClass;
 import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
 
@@ -25,6 +26,12 @@ public class SmallGoodsDAOImpl implements SmallGoodsDAO {
     public List<SmallGoodsEntity> getAll() {
         return em.createQuery("select goods from SmallGoodsEntity goods", SmallGoodsEntity.class).getResultList();
     }
+
+    @Override
+    public List<SmallGoodsEntity> getBestSellers() {
+        return em.createQuery("select goods from SmallGoodsEntity goods order by goods.salesCounter desc",SmallGoodsEntity.class).setMaxResults(ConfigurationClass.AMOUNT_OF_BEST_SELLERS).getResultList();
+    }
+
     @Override
     public void addSmallGoods(SmallGoodsEntity smallGoodsEntity) {
         em.persist(smallGoodsEntity);

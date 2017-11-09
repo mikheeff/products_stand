@@ -11,14 +11,14 @@
     <h:outputScript library="bootstrap" name="js/bootstrap.js"/>
 </h:head>
 <h:body>
-    <p:dataGrid var="goods" value="#{mainView.allGoods}" columns="4" layout="grid">
+    <p:dataGrid var="goods" value="#{mainView.bestSellers}" columns="4" layout="grid">
         <f:facet name="header">
             Top Games
         </f:facet>
         <p:panel header="#{goods.name}" style="text-align:center">
             <h:panelGrid columns="1" style="width:100%">
                 <p:graphicImage url="#{goods.img}" width="200" height="200"/>
-                <h:outputText value="#{goods.price}" />
+                <h:outputText value="#{goods.price} &#8381;" />
             </h:panelGrid>
         </p:panel>
     </p:dataGrid>
