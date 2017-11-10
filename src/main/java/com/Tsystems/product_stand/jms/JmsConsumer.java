@@ -18,14 +18,11 @@ import javax.jms.*;
 import java.util.Arrays;
 public class JmsConsumer implements MessageListener, AutoCloseable {
     private SmallGoodsService smallGoodsService;
-//    @EJB
-//    private MainView mainView;
     private ActiveMQConnectionFactory _connectionFactory;
     private Connection _connection = null;
     private Session _session = null;
     private MessageConsumer _consumer;
     private String _queueName;
-    private SmallGoodsEntity smallGoodsEntity = null;
 
     /**
      * Конструктор используется в случае, когда брокер не требует авторизации.
@@ -71,11 +68,7 @@ public class JmsConsumer implements MessageListener, AutoCloseable {
         if (msg instanceof ObjectMessage) {
             try {
                 ObjectMessage objectMessage = (ObjectMessage) msg;
-
-//                SmallGoods smallGoods = (SmallGoods) objectMessage.getObject();
                 Event event = (Event) objectMessage.getObject();
-
-//                smallGoodsService.addSmallGoods(smallGoods);
                 smallGoodsService.handleEvent(event);
             } catch (JMSException e) {
                 e.printStackTrace();

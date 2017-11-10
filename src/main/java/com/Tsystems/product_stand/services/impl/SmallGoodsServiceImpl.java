@@ -2,7 +2,9 @@ package com.Tsystems.product_stand.services.impl;
 
 import com.Tsystems.product_stand.Configuration.ConfigurationClass;
 import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
+import com.Tsystems.product_stand.controllers.MainView;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
+import com.Tsystems.product_stand.jms.JmsConsumer;
 import com.Tsystems.product_stand.services.api.SmallGoodsService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -10,9 +12,13 @@ import com.sun.jersey.api.client.WebResource;
 import com.tsystems.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.jms.JMSException;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +28,8 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
 
     @EJB
     SmallGoodsDAO smallGoodsDAO;
+    @EJB
+    MainView mainView;
 
     @Override
     public List<SmallGoods> getAll() {
@@ -59,6 +67,13 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         smallGoodsDAO.addSmallGoods(smallGoodsEntity);
     }
 
+    public void receiveMessage() throws JMSException {
+        SmallGoodsService smallGoodsService = this;
+        String url = ConfigurationClass.ACTIVE_MQ_URL; // broker connector url
+        JmsConsumer consumer = new JmsConsumer(url, "test.in",smallGoodsService);
+        consumer.init();
+    }
+
     @Override
     public void removeAll() {
         smallGoodsDAO.removeAll();
@@ -75,6 +90,7 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         if (event instanceof UpdateEvent){
             updateSmallGoods((SmallGoods)event.getProperty());
         }
+        mainView.refreshForm();
     }
 
     @Override
@@ -109,7 +125,5 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

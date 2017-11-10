@@ -1,50 +1,53 @@
 package com.Tsystems.product_stand.controllers;
 
-import com.Tsystems.product_stand.Configuration.ConfigurationClass;
-import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
-import com.Tsystems.product_stand.entities.SmallGoodsEntity;
-import com.Tsystems.product_stand.jms.JmsConsumer;
 import com.Tsystems.product_stand.services.api.SmallGoodsService;
 import com.tsystems.SmallGoods;
+import org.primefaces.context.RequestContext;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.jms.JMSException;
-import java.io.Serializable;
+import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Random;
 
+import static org.primefaces.context.RequestContext.INSTANCE_KEY;
+@Stateless
 @ApplicationScoped
 @ManagedBean
-public class MainView implements Serializable {
+public class MainView {
     @EJB
-    SmallGoodsService smallGoodsService;
-
-//    private List<SmallGoods> smallGoodsList;
-
-    private String hello = "Hello";
-
+    private SmallGoodsService smallGoodsService;
+    private List<SmallGoods> bestSellersList;
     @PostConstruct
     public void init(){
         smallGoodsService.removeAll();
         smallGoodsService.loadAllGoodsToDB();
-//        smallGoodsList = smallGoodsService.getBestSellers();
         try {
-            receiveMessage();
+            smallGoodsService.receiveMessage();
         } catch (JMSException e) {
             e.printStackTrace();
         }
+
+//         this.requestContext = RequestContext.getCurrentInstance();
+//        requestContext.update("form:goodsGrid");
+//            requestContext = RequestContext.getCurrentInstance();
+        setBestSellersList();
     }
 
-//    public List<SmallGoods> getSmallGoodsList() {
-//        return smallGoodsList;
-//    }
 
-    public List<SmallGoods> getBestSellers() {
+
+    public List<SmallGoods> getBestSellersList() {
         return smallGoodsService.getBestSellers();
+    }
+    public void setBestSellersList() {
+        this.bestSellersList = smallGoodsService.getBestSellers();
     }
 
 
@@ -52,24 +55,12 @@ public class MainView implements Serializable {
         return smallGoodsService.getAll();
     }
 
-
-    public void changeHello() throws JMSException {
-        hello = hello + new Random().nextInt();
-
-    }
-
-    public void receiveMessage() throws JMSException{
-        String url = ConfigurationClass.ACTIVE_MQ_URL; // broker connector url
-        JmsConsumer consumer = new JmsConsumer(url, "test.in",smallGoodsService);
-        consumer.init();
+    public void refreshForm(){
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("form:goodsGrid");
+//        RequestContext requestContext = MainView.requestContext;
+//        RequestContext requestContext = (RequestContext) FacesContext.getCurrentInstance().getAttributes().get(INSTANCE_KEY);
     }
 
 
-    public String getHello() {
-        return hello;
-    } //
-
-    public void setHello(String hello) {
-        this.hello = hello;
-    }
 }

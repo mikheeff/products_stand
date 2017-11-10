@@ -6,26 +6,25 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xml:lang="en" lang="en">
 <h:head>
-    <title>Title</title>
+    <title>Product Stand</title>
     <h:outputStylesheet library="bootstrap" name="css/bootstrap.css"/>
     <h:outputScript library="bootstrap" name="js/bootstrap.js"/>
 </h:head>
 <h:body>
-    <p:dataGrid var="goods" value="#{mainView.bestSellers}" columns="4" layout="grid">
-        <f:facet name="header">
-            Top Games
-        </f:facet>
-        <p:panel header="#{goods.name}" style="text-align:center">
-            <h:panelGrid columns="1" style="width:100%">
-                <p:graphicImage url="#{goods.img}" width="200" height="200"/>
-                <h:outputText value="#{goods.price} &#8381;" />
-            </h:panelGrid>
-        </p:panel>
-    </p:dataGrid>
 
-    <h:form>
-        <h:outputText id="hello" value="#{mainView.hello}"/>
-        <p:commandButton actionListener="#{mainView.changeHello}" update="hello" ajax="true"/>
+    <h:form id ="form">
+        <p:dataGrid id="goodsGrid" var="goods" value="#{mainView.bestSellersList}" columns="4" layout="grid">
+            <f:facet name="header">
+                Top Games
+            </f:facet>
+            <p:panel header="#{goods.name}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                    <p:graphicImage url="#{goods.img}" width="200" height="200"/>
+                    <h:outputText  value="#{goods.price} &#8381;" />
+                </h:panelGrid>
+            </p:panel>
+        </p:dataGrid>
+        <p:poll interval="1"  update="form" />
     </h:form>
 </h:body>
 </html>
