@@ -13,10 +13,41 @@
         <servlet-name>Faces_servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+
+        <servlet-name>Push Servlet</servlet-name>
+
+        <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+
+
+        <init-param>
+            <param-name>org.atmosphere.cpr.packages</param-name>
+            <param-value>com.Tsystems.product_stand</param-value>
+        </init-param>
+        <!--<load-on-startup>0</load-on-startup>-->
+        <!--<async-supported>true</async-supported>-->
+    </servlet>
+
+    <servlet-mapping>
+
+        <servlet-name>Push Servlet</servlet-name>
+
+        <url-pattern>/primepush/*</url-pattern>
+
+    </servlet-mapping>
+
+
+
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>glass-x</param-value>
     </context-param>
+    <context-param>
+        <param-name>org.omnifaces.SOCKET_ENDPOINT_ENABLED</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>

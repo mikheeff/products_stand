@@ -48,6 +48,9 @@
           <element id="library" level="project" name="Maven: org.hibernate.common:hibernate-commons-annotations:4.0.2.Final" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-entitymanager:4.2.21.Final" />
           <element id="library" level="project" name="Maven: javax.faces:jsf-api:2.1" />
+          <element id="library" level="project" name="Maven: org.ocpsoft.rewrite:rewrite-servlet:3.4.1.Final" />
+          <element id="library" level="project" name="Maven: org.ocpsoft.rewrite:rewrite-config-prettyfaces:3.4.1.Final" />
+          <element id="library" level="project" name="Maven: org.ocpsoft.rewrite:rewrite-integration-faces:3.4.1.Final" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.3" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" />
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
@@ -68,6 +71,10 @@
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-client:1.8" />
           <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.1" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:glass-x:1.0.6" />
+          <element id="library" level="project" name="Maven: org.omnifaces:omnifaces:2.6.6" />
+          <element id="library" level="project" name="Maven: org.atmosphere:atmosphere-runtime:2.4.14" />
+          <element id="library" level="project" name="Maven: eu.infomas:annotation-detector:3.0.1" />
+          <element id="library" level="project" name="Maven: org.atmosphere.jboss.as:jboss-as-websockets:0.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

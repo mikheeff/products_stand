@@ -2,6 +2,7 @@ package com.Tsystems.product_stand.services.impl;
 
 import com.Tsystems.product_stand.Configuration.ConfigurationClass;
 import com.Tsystems.product_stand.DAO.api.SmallGoodsDAO;
+import com.Tsystems.product_stand.PushEvent;
 import com.Tsystems.product_stand.controllers.MainView;
 import com.Tsystems.product_stand.entities.SmallGoodsEntity;
 import com.Tsystems.product_stand.jms.JmsConsumer;
@@ -12,24 +13,38 @@ import com.sun.jersey.api.client.WebResource;
 import com.tsystems.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.omnifaces.config.BeanManager;
 import org.primefaces.context.RequestContext;
+import org.primefaces.push.EventBus;
+import org.primefaces.push.EventBusFactory;
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Observes;
+import javax.faces.bean.ApplicationScoped;
 import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URLConnection;
 
 @Stateless
+@ApplicationScoped
 public class SmallGoodsServiceImpl implements SmallGoodsService{
 
     @EJB
     SmallGoodsDAO smallGoodsDAO;
-    @EJB
-    MainView mainView;
+    @Inject
+//    private javax.enterprise.event.Event<Event> eventJSF;
+    private javax.enterprise.inject.spi.BeanManager beanManager;
 
     @Override
     public List<SmallGoods> getAll() {
@@ -90,8 +105,10 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         if (event instanceof UpdateEvent){
             updateSmallGoods((SmallGoods)event.getProperty());
         }
-        mainView.refreshForm();
+
+        beanManager.fireEvent(new PushEvent(event.getProperty().toString()));
     }
+
 
     @Override
     public void updateSmallGoods(SmallGoods smallGoods) {

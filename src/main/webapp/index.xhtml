@@ -2,7 +2,10 @@
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xml:lang="en" lang="en">
 <h:head>
@@ -19,12 +22,20 @@
             </f:facet>
             <p:panel header="#{goods.name}" style="text-align:center">
                 <h:panelGrid columns="1" style="width:100%">
-                    <p:graphicImage url="#{goods.img}" width="200" height="200"/>
+                    <h:commandLink action="#{mainView.redirectToProductDetails(goods.id)}">
+                    <p:graphicImage  url="#{goods.img}" width="200" height="200"/>
+                    </h:commandLink>
                     <h:outputText  value="#{goods.price} &#8381;" />
                 </h:panelGrid>
             </p:panel>
         </p:dataGrid>
-        <p:poll interval="1"  update="form" />
     </h:form>
+
+    <h:form>
+        <o:socket channel="channel"  >
+        <f:ajax event="event" render=":form" />
+        </o:socket>
+    </h:form>
+
 </h:body>
 </html>

@@ -79,7 +79,6 @@
     <orderEntry type="library" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.3" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:4.3.11.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:javax.mail-api:1.5.5" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.7" level="project" />
@@ -99,6 +98,9 @@
     <orderEntry type="library" name="Maven: org.hibernate.common:hibernate-commons-annotations:4.0.2.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-entitymanager:4.2.21.Final" level="project" />
     <orderEntry type="library" name="Maven: javax.faces:jsf-api:2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-servlet:3.4.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-config-prettyfaces:3.4.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-integration-faces:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
@@ -119,5 +121,10 @@
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-client:1.8" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.1" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces.themes:glass-x:1.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.omnifaces:omnifaces:2.6.6" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-runtime:2.4.14" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
+    <orderEntry type="library" name="Maven: eu.infomas:annotation-detector:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere.jboss.as:jboss-as-websockets:0.4" level="project" />
   </component>
 </module>
