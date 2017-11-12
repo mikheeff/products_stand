@@ -56,9 +56,6 @@ public class MainView {
             e.printStackTrace();
         }
 
-//         this.requestContext = RequestContext.getCurrentInstance();
-//        requestContext.update("form:goodsGrid");
-//            requestContext = RequestContext.getCurrentInstance();
         setBestSellersList();
     }
 
@@ -86,7 +83,6 @@ public class MainView {
 
     public void refreshForm(@Observes PushEvent event){
         channel.send("event");
-
     }
 
 

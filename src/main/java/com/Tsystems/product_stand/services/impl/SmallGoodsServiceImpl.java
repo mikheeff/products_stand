@@ -43,7 +43,6 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
     @EJB
     SmallGoodsDAO smallGoodsDAO;
     @Inject
-//    private javax.enterprise.event.Event<Event> eventJSF;
     private javax.enterprise.inject.spi.BeanManager beanManager;
 
     @Override
