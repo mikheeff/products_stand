@@ -20,8 +20,7 @@ import org.primefaces.push.EventBusFactory;
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 import javax.enterprise.event.Observes;
 import javax.faces.bean.ApplicationScoped;
 import javax.inject.Inject;
@@ -38,6 +37,7 @@ import java.net.URLConnection;
 
 @Stateless
 @ApplicationScoped
+@TransactionManagement (TransactionManagementType.CONTAINER)
 public class SmallGoodsServiceImpl implements SmallGoodsService{
 
     @EJB
@@ -45,11 +45,13 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
     @Inject
     private javax.enterprise.inject.spi.BeanManager beanManager;
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public List<SmallGoods> getAll() {
         return convertToDTO(smallGoodsDAO.getAll());
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public List<SmallGoods> getBestSellers() {
         return convertToDTO(smallGoodsDAO.getBestSellers());
@@ -69,7 +71,7 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         return smallGoodsList;
     }
 
-
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void addSmallGoods(SmallGoods smallGoods) {
         SmallGoodsEntity smallGoodsEntity = new SmallGoodsEntity();
@@ -88,11 +90,13 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         consumer.init();
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void removeAll() {
         smallGoodsDAO.removeAll();
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void handleEvent(Event event) {
         if (event instanceof AddEvent){
@@ -108,13 +112,14 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         beanManager.fireEvent(new PushEvent(event.getProperty().toString()));
     }
 
-
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void updateSmallGoods(SmallGoods smallGoods) {
         SmallGoodsEntity smallGoodsEntity = smallGoodsDAO.getSmallGoodsById(smallGoods.getId());
         smallGoodsEntity.setName(smallGoods.getName());
         smallGoodsEntity.setPrice(smallGoods.getPrice());
         smallGoodsEntity.setImg(smallGoods.getImg());
+        smallGoodsEntity.setSalesCounter(smallGoods.getSalesCounter());
         smallGoodsDAO.updateSmallGoods(smallGoodsEntity);
     }
 

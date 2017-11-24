@@ -47,7 +47,6 @@ public class JmsConsumer implements MessageListener, AutoCloseable {
      * в качестве подписчика на событие получения сообщений.
      */
     public void init() throws JMSException {
-        System.out.println("Init consumer...");
 
         _connection = _connectionFactory.createConnection();
         _connection.start();

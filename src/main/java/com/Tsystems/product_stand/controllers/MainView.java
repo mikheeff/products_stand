@@ -26,16 +26,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.jms.JMSException;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import com.ocpsoft.pretty.faces.annotation.URLAction;
-import com.ocpsoft.pretty.faces.annotation.URLMapping;
-import com.ocpsoft.pretty.faces.annotation.URLMappings;
-
-import static org.primefaces.context.RequestContext.INSTANCE_KEY;
-//@Stateless
 @ApplicationScoped
 @ManagedBean
 public class MainView {
@@ -44,46 +36,23 @@ public class MainView {
     @Inject @Push(channel = "channel")
     org.omnifaces.cdi.PushContext channel;
 
-    private List<SmallGoods> bestSellersList;
-
-    @PostConstruct
-    public void init(){
-        smallGoodsService.removeAll();
-        smallGoodsService.loadAllGoodsToDB();
-        try {
-            smallGoodsService.receiveMessage();
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-
-        setBestSellersList();
-    }
 
     public void redirectToProductDetails(int id){
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("htEFerflow.com");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(ConfigurationClass.SERVER_URL+"/catalog/goods/"+id);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-
     public List<SmallGoods> getBestSellersList() {
         return smallGoodsService.getBestSellers();
     }
-    public void setBestSellersList() {
-        this.bestSellersList = smallGoodsService.getBestSellers();
-    }
 
-
-    public List<SmallGoods> getAllGoods() {
-        return smallGoodsService.getAll();
-    }
 
     public void refreshForm(@Observes PushEvent event){
         channel.send("event");
     }
-
 
 }
