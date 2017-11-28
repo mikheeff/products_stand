@@ -64,8 +64,8 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
             smallGoods.setId(smallGoodsEntity.getId());
             smallGoods.setName(smallGoodsEntity.getName());
             smallGoods.setPrice(smallGoodsEntity.getPrice());
-            smallGoods.setImg(smallGoodsEntity.getImg());
             smallGoods.setSalesCounter(smallGoodsEntity.getSalesCounter());
+            smallGoods.setVisible(smallGoodsEntity.getVisible());
             smallGoodsList.add(smallGoods);
         }
         return smallGoodsList;
@@ -78,8 +78,8 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         smallGoodsEntity.setId(smallGoods.getId());
         smallGoodsEntity.setName(smallGoods.getName());
         smallGoodsEntity.setPrice(smallGoods.getPrice());
-        smallGoodsEntity.setImg(smallGoods.getImg());
         smallGoodsEntity.setSalesCounter(smallGoods.getSalesCounter());
+        smallGoodsEntity.setVisible(smallGoods.getVisible());
         smallGoodsDAO.addSmallGoods(smallGoodsEntity);
     }
 
@@ -118,8 +118,8 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         SmallGoodsEntity smallGoodsEntity = smallGoodsDAO.getSmallGoodsById(smallGoods.getId());
         smallGoodsEntity.setName(smallGoods.getName());
         smallGoodsEntity.setPrice(smallGoods.getPrice());
-        smallGoodsEntity.setImg(smallGoods.getImg());
         smallGoodsEntity.setSalesCounter(smallGoods.getSalesCounter());
+        smallGoodsEntity.setVisible(smallGoods.getVisible());
         smallGoodsDAO.updateSmallGoods(smallGoodsEntity);
     }
 

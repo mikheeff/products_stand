@@ -15,8 +15,6 @@ import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 @Stateless(name = "goodsDAO", mappedName = "beanName")
-//@EJB(beanInterface = SmallGoodsDAO.class, name = "SmallGoodsDAO")
-//@LocalBean
 public class SmallGoodsDAOImpl implements SmallGoodsDAO {
 
     @PersistenceContext(unitName = "product_stand")
@@ -29,7 +27,7 @@ public class SmallGoodsDAOImpl implements SmallGoodsDAO {
 
     @Override
     public List<SmallGoodsEntity> getBestSellers() {
-        return em.createQuery("select goods from SmallGoodsEntity goods order by goods.salesCounter desc",SmallGoodsEntity.class).setMaxResults(ConfigurationClass.AMOUNT_OF_BEST_SELLERS).getResultList();
+        return em.createQuery("select goods from SmallGoodsEntity goods where goods.visible =:visible order by goods.salesCounter desc",SmallGoodsEntity.class).setParameter("visible",1).setMaxResults(ConfigurationClass.AMOUNT_OF_BEST_SELLERS).getResultList();
     }
 
     @Override

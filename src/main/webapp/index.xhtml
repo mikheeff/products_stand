@@ -23,7 +23,7 @@
             <p:panel header="#{goods.name}" style="text-align:center">
                 <h:panelGrid columns="1" style="width:100%">
                     <h:commandLink action="#{mainView.redirectToProductDetails(goods.id)}">
-                    <p:graphicImage  url="#{goods.img}" width="200" height="200"/>
+                    <p:graphicImage url="http://localhost:8081/catalog/goods/image?id=#{goods.id}&amp;number=0" width="200" height="200"/>
                     </h:commandLink>
                     <h:outputText  value="#{goods.price} &#8381;" />
                 </h:panelGrid>
