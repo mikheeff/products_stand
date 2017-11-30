@@ -103,7 +103,7 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
     public void receiveMessage() throws JMSException {
         SmallGoodsService smallGoodsService = this;
         String url = ConfigurationClass.ACTIVE_MQ_URL; // broker connector url
-        JmsConsumer consumer = new JmsConsumer(url, "connection.in",smallGoodsService);
+        JmsConsumer consumer = new JmsConsumer(url, "test.in",smallGoodsService);
         consumer.init();
     }
 
