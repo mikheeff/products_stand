@@ -19,6 +19,8 @@ import org.primefaces.push.EventBus;
 import org.primefaces.push.EventBusFactory;
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.*;
 import javax.enterprise.event.Observes;
@@ -45,6 +47,8 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
     @Inject
     private javax.enterprise.inject.spi.BeanManager beanManager;
 
+    private static Logger logger = LoggerFactory.getLogger(SmallGoodsService.class.getName());
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public List<SmallGoods> getAll() {
@@ -57,6 +61,11 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         return convertToDTO(smallGoodsDAO.getBestSellers());
     }
 
+    /**
+     * converts Small goods to data access object
+     * @param smallGoodsEntityList
+     * @return
+     */
     List<SmallGoods> convertToDTO(List <SmallGoodsEntity> smallGoodsEntityList){
         List<SmallGoods> smallGoodsList = new ArrayList<>();
         for (SmallGoodsEntity smallGoodsEntity : smallGoodsEntityList){
@@ -71,6 +80,10 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         return smallGoodsList;
     }
 
+    /**
+     * add new goods
+     * @param smallGoods
+     */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void addSmallGoods(SmallGoods smallGoods) {
@@ -83,35 +96,55 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         smallGoodsDAO.addSmallGoods(smallGoodsEntity);
     }
 
+    /**
+     * creates new instance of JmsConsumer to receive messages
+     * @throws JMSException
+     */
     public void receiveMessage() throws JMSException {
         SmallGoodsService smallGoodsService = this;
         String url = ConfigurationClass.ACTIVE_MQ_URL; // broker connector url
-        JmsConsumer consumer = new JmsConsumer(url, "test.in",smallGoodsService);
+        JmsConsumer consumer = new JmsConsumer(url, "connection.in",smallGoodsService);
         consumer.init();
     }
 
+    /**
+     * removes all goods from database
+     */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void removeAll() {
+        logger.info("removing all goods");
         smallGoodsDAO.removeAll();
     }
 
+    /**
+     * handles event from broker and identify its type, then socket push event to client
+     * @param event
+     */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void handleEvent(Event event) {
         if (event instanceof AddEvent){
+            logger.info("new Add Event " + event.getProperty().toString());
             addSmallGoods((SmallGoods) event.getProperty());
         }
         if (event instanceof DeleteEvent){
+            logger.info("new Delete Event " + event.getProperty().toString());
             smallGoodsDAO.deleteSmallGoodsById((Integer)event.getProperty());
         }
         if (event instanceof UpdateEvent){
+            logger.info("new Update Event " + event.getProperty().toString());
             updateSmallGoods((SmallGoods)event.getProperty());
         }
 
+        logger.info("new socket push event");
         beanManager.fireEvent(new PushEvent(event.getProperty().toString()));
     }
 
+    /**
+     * updates goods
+     * @param smallGoods
+     */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
     public void updateSmallGoods(SmallGoods smallGoods) {
@@ -123,8 +156,12 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
         smallGoodsDAO.updateSmallGoods(smallGoodsEntity);
     }
 
+    /**
+     * loads all goods to database from server app
+     */
     @Override
     public void loadAllGoodsToDB() {
+        logger.info("loading goods to database...");
         List<SmallGoods> SmallGoodsList;
         Client client = Client.create();
 
@@ -144,7 +181,7 @@ public class SmallGoodsServiceImpl implements SmallGoodsService{
                 this.addSmallGoods(goods);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("mapping error",e);
         }
     }
 }

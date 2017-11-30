@@ -13,6 +13,8 @@ import org.primefaces.push.EventBus;
 import org.primefaces.push.EventBusFactory;
 import org.primefaces.push.PushContext;
 import org.primefaces.push.PushContextFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
@@ -36,22 +38,38 @@ public class MainView {
     @Inject @Push(channel = "channel")
     org.omnifaces.cdi.PushContext channel;
 
+    private static Logger logger = LoggerFactory.getLogger(MainView.class.getName());
+
+
+    /**
+     * redirects to product detail page
+     * @param id
+     */
 
     public void redirectToProductDetails(int id){
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect(ConfigurationClass.SERVER_URL+"/catalog/goods/"+id);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("redirectToProductDetails error",e);
         }
     }
 
 
+    /**
+     * get all best sellers goods from database
+     * @return
+     */
     public List<SmallGoods> getBestSellersList() {
         return smallGoodsService.getBestSellers();
     }
 
-
+    /**
+     * subscribes to event from backend and send to channel
+     * ajax will refresh form
+     * @param event
+     */
     public void refreshForm(@Observes PushEvent event){
+        logger.info("got new push event {}",event.getMessage());
         channel.send("event");
     }
 

@@ -20,6 +20,10 @@ public class SmallGoodsDAOImpl implements SmallGoodsDAO {
     @PersistenceContext(unitName = "product_stand")
     private EntityManager em;
 
+    /**
+     * basic CRUD operations
+     * @return
+     */
     @Override
     public List<SmallGoodsEntity> getAll() {
         return em.createQuery("select goods from SmallGoodsEntity goods", SmallGoodsEntity.class).getResultList();
@@ -50,6 +54,9 @@ public class SmallGoodsDAOImpl implements SmallGoodsDAO {
         em.merge(smallGoodsEntity);
     }
 
+    /**
+     * clears database
+     */
     @Override
     public void removeAll() {
         em.createQuery("delete from SmallGoodsEntity").executeUpdate();
